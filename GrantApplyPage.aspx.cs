@@ -5,24 +5,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class DonationPage : System.Web.UI.Page
+public partial class GrantApplyPage : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
+
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         try
         {
             CommunityAssistEntities ce = new CommunityAssistEntities();
-            Donation d = new Donation();
+            ServiceGrant sg = new ServiceGrant();
 
-            d.DonationAmount = Decimal.Parse(txtAmount.Text);
-            d.DonationDate = DateTime.Now;
-            ce.Donations.Add(d);
+            sg.GrantNeedExplanation = txtExplain.Text;
+            sg.GrantDate = DateTime.Now;
+            sg.GrantAmount = Decimal.Parse(txtAmount.Text);
+            ce.ServiceGrants.Add(sg);
 
-            Response.Redirect("DonateSummary.aspx");
+            Response.Redirect("GrantSummary.aspx");
         }
 
         catch (Exception ex)

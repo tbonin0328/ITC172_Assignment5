@@ -12,8 +12,8 @@ public class LoginClass
 {
     string password;
     string userName;
-    int personkey = 0;
-    Byte[] hashed;
+    //int personkey = 0;
+    //Byte[] hashed;
     CommunityAssistEntities ce = new CommunityAssistEntities();
 
     public LoginClass(string pass, string user)

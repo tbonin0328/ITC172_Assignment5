@@ -13,14 +13,17 @@
         <table>
             <tr>
                 <td>
-                    <asp:TextBox ID="txtAmount" runat="server">Donation Amount:</asp:TextBox>
+                Donation Amount:
+                </td>
+                <td>
+                    <asp:TextBox ID="txtAmount" runat="server"></asp:TextBox>
                 </td>
                 <td>
                     <asp:RequiredFieldValidator ID="revAmount" runat="server" ErrorMessage="You must enter an amount." ControlToValidate="txtAmount"></asp:RequiredFieldValidator>
                 </td>
-                <td>
-                    <asp:RegularExpressionValidator ID="rfvAmount" runat="server" ErrorMessage="You must enter a valid amount." ControlToValidate="txtAmount" ValidationExpression="^\$(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$"></asp:RegularExpressionValidator>
-                </td>
+                <!-- <td>
+                   <asp:RegularExpressionValidator ID="rfvAmount" runat="server" ErrorMessage="You must enter a valid amount." ControlToValidate="txtAmount" ValidationExpression="^\$(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$"></asp:RegularExpressionValidator>
+                </td> -->
             </tr>
             <tr>
             <td>

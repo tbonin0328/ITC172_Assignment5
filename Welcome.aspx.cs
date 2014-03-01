@@ -10,26 +10,40 @@ public partial class Welcome : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["PersonKey"] != null)
-        {
-            int pk = (int)Session["PersonKey"];
-            ManageDonation md = new ManageDonation();
-            DataTable table = md.GetDonation(pk);
-            foreach (DataRow row in table.Rows)
-            {
-                lblHello.Text = "Welcome " + row["FirstName"].ToString() + " " + row["LastName"].ToString();
-            }
 
-            gvDonation.DataSource = table;
-            gvDonation.DataBind();
+        if (Session["personKey"] != null)
+        {
+            GetPersonInfo();
         }
         else
         {
             Response.Redirect("Default.aspx");
         }
     }
+
+    private void GetPersonInfo()
+    {
+        CommunityAssistEntities ce = new CommunityAssistEntities();
+        int pk = (int)Session["personKey"];
+        var customer = from c in ce.People
+                       where c.PersonKey == pk
+                       select new
+                       {
+                           c.PersonLastName,
+                           c.PersonFirstName,
+                           c.PersonUsername
+                       };
+
+        GridView1.DataSource = customer.ToList();
+        GridView1.DataBind();
+    }
+
     protected void btnDonate_Click(object sender, EventArgs e)
     {
         Response.Redirect("DonationPage.aspx");
+    }
+    protected void btnApply_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("GrantApplyPage.aspx");
     }
 }

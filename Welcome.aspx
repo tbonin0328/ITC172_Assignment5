@@ -10,11 +10,14 @@
     <form id="form1" runat="server">
     <div>
         <asp:Label ID="lblHello" runat="server" Text="Label"></asp:Label>
-        <asp:GridView ID="gvDonation" runat="server"></asp:GridView>
+        <asp:GridView ID="GridView1" runat="server"></asp:GridView>
     <table>
         <tr>
             <td>
                 <asp:Button ID="btnDonate" runat="server" Text="Donate!" OnClick="btnDonate_Click" />
+            </td>
+            <td>
+                <asp:Button ID="btnApply" runat="server" Text="Apply for Grant!" OnClick="btnApply_Click"/>
             </td>
         </tr>
     </table>
