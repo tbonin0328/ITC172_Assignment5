@@ -9,27 +9,47 @@ public partial class GrantApplyPage : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["personKey"] != null)
+        {
+            int personkey = (int)Session["personKey"];
+        }
+        else
+        {
+            Response.Redirect("Default.aspx");
+        }
     }
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-        try
+        CommunityAssistEntities ce = new CommunityAssistEntities();
+        int personkey = (int)Session["personKey"];
+        if (personkey != 0)
         {
-            CommunityAssistEntities ce = new CommunityAssistEntities();
-            ServiceGrant sg = new ServiceGrant();
+            try
+            {
+                ServiceGrant sg = new ServiceGrant();
 
-            sg.GrantNeedExplanation = txtExplain.Text;
-            sg.GrantDate = DateTime.Now;
-            sg.GrantAmount = Decimal.Parse(txtAmount.Text);
-            ce.ServiceGrants.Add(sg);
+                sg.GrantNeedExplanation = txtExplain.Text;
+                sg.PersonKey = personkey;
+                sg.GrantDate = DateTime.Now;
+                sg.GrantAmount = Decimal.Parse(txtAmount.Text);
+                sg.ServiceKey.Equals(ddServices.SelectedValue);
 
-            Response.Redirect("GrantSummary.aspx");
+                ce.ServiceGrants.Add(sg);
+                ce.SaveChanges();
+
+                Response.Redirect("GrantSummary.aspx");
+            }
+
+            catch (Exception ex)
+            {
+                lblResult.Text = ex.Message;
+            }
         }
-
-        catch (Exception ex)
+        else
         {
-            lblResult.Text = ex.Message;
+            lblResult.Text = "Not working. Session personkey = " + personkey;
         }
+    
     }
 }

@@ -9,25 +9,39 @@ public partial class DonationPage : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["personKey"] != null)
+        {
+            int personkey = (int)Session["personKey"];
+        }
+        else
+        {
+            Response.Redirect("Default.aspx");
+        }
     }
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-        try
+        int personkey = (int)Session["personKey"];
+        if (personkey != 0)
         {
-            CommunityAssistEntities ce = new CommunityAssistEntities();
-            Donation d = new Donation();
+            try
+            {
+                CommunityAssistEntities ce = new CommunityAssistEntities();
+                Donation d = new Donation();
 
-            d.DonationAmount = Decimal.Parse(txtAmount.Text);
-            d.DonationDate = DateTime.Now;
-            ce.Donations.Add(d);
+                d.DonationAmount = Decimal.Parse(txtAmount.Text);
+                d.DonationDate = DateTime.Now;
+                d.PersonKey = personkey;
+                ce.Donations.Add(d);
 
-            Response.Redirect("DonateSummary.aspx");
-        }
+                ce.SaveChanges();
 
-        catch (Exception ex)
-        {
-            lblResult.Text = ex.Message;
+                Response.Redirect("DonationSummary.aspx");
+            }
+
+            catch (Exception ex)
+            {
+                lblResult.Text = ex.Message;
+            }
         }
     }
 }

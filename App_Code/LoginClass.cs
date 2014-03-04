@@ -22,7 +22,6 @@ public class LoginClass
         userName = user;
     }
 
-
     public int ValidateLogin()
     {
         //personkey to return initally 0
